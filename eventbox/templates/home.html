@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1>Events in Bahrain</h1>
+<p>Concerts, comedy, food and talks: find something for tonight and book in a minute.</p>
+<h2>Coming up</h2>
+<div class="cards">
+  {% for e in events %}{% include "_event_card.html" %}{% endfor %}
+</div>
+<p><a class="button" href="/events">See every event</a></p>
+{% endblock %}

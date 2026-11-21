@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.brand }}{% endblock %} - {{ site.brand }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">{{ site.brand }}</a>
+    <nav>
+      <a href="/events">Events</a>
+      {% if user %}
+      <a href="/account">My tickets</a>
+      {% if user.role == "organiser" %}<a href="/organiser">Organiser</a>{% endif %}
+      <form method="post" action="/logout" class="inline"><button>Log out</button></form>
+      {% else %}
+      <a href="/login">Log in</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main>
+    {% with messages = get_flashed_messages() %}
+    {% for message in messages %}<p class="flash">{{ message }}</p>{% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    {% block footer %}{{ site.brand }}, events in Bahrain. Questions? {{ site.support_email }}{% endblock %}
+  </footer>
+</body>
+</html>

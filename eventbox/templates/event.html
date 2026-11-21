@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ event.name }}{% endblock %}
+{% block content %}
+<h1>{{ event.name }}</h1>
+<p class="when">{{ event.when }}, {{ event.venue }}</p>
+{% if event.description %}<p class="description">{{ event.description }}</p>{% endif %}
+<ul class="prices">
+  {% for name, fils in event.prices %}
+  <li>{{ name }}: {% if fils %}{{ fils | bhd }}{% else %}free{% endif %}</li>
+  {% endfor %}
+</ul>
+<p class="left">{% if event.left == 0 %}Sold out{% else %}{{ event.left }} left{% endif %}</p>
+
+<h2>Buy tickets</h2>
+{% if error %}<p class="error">Sorry: {{ error }}.</p>{% endif %}
+<form method="post" action="/events/{{ event.id }}/buy">
+  <label>Your email <input type="email" name="email" value="{{ user.email if user else '' }}" required></label>
+  <label>Number of tickets <input type="number" name="quantity" min="1" value="1"></label>
+  {% if event.prices | length > 1 %}
+  <label>Seats
+    <select name="category">
+      {% for name, fils in event.prices %}<option value="{{ name | lower }}">{{ name }}</option>{% endfor %}
+    </select>
+  </label>
+  {% endif %}
+  <button>Buy tickets</button>
+</form>
+{% endblock %}

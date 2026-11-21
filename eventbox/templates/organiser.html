@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Your events{% endblock %}
+{% block content %}
+<h1>Your events</h1>
+<p><a class="button" href="/organiser/events/new">New event</a></p>
+<table class="sales">
+  <tr><th>Event</th><th>Starts</th><th>Sold</th><th>Revenue</th></tr>
+  {% for e in events %}
+  <tr>
+    <td><a href="/organiser/events/{{ e.id }}/edit">{{ e.name }}</a></td>
+    <td>{{ e.starts_at | when }}</td>
+    <td>{{ e.sold }} of {{ e.capacity }}</td>
+    <td>{{ e.revenue / 1000 }} BHD</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

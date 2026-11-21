@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}My account{% endblock %}
+{% block content %}
+<h1>Hello, {{ user.name }}</h1>
+<h2>My tickets</h2>
+<ul class="orders">
+  {% for o in orders %}
+  <li><a href="/orders/{{ code_of(o) }}">{{ code_of(o) }}</a>: {{ o.event_name }}, {{ o.starts_at | when }},
+    {{ o.quantity }} tickets, {{ o.status }}</li>
+  {% else %}
+  <li>No orders yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

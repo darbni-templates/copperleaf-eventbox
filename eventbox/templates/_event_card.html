@@ -1,0 +1,7 @@
+{# One event in a list: used by the home page and /events. Needs `e`. #}
+<article class="event-card">
+  <h3><a href="/events/{{ e.id }}">{{ e.name }}</a></h3>
+  <p class="when">{{ e.when }}, {{ e.venue }}</p>
+  <p class="price">{% if e.price_fils %}From {{ e.price_fils | bhd }}{% else %}Free entry{% endif %}</p>
+  <p class="badge">{% if e.left == 0 %}Sold out{% else %}{{ e.left }} left{% endif %}</p>
+</article>

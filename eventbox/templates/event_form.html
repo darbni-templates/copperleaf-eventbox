@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ event.name if event else "New event" }}{% endblock %}
+{% block content %}
+<h1>{{ event.name if event else "New event" }}</h1>
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+<form method="post">
+  <label>Name <input name="name" value="{{ event.name if event else '' }}"></label>
+  <label>Venue <input name="venue" value="{{ event.venue if event else '' }}"></label>
+  <label>Starts (UTC) <input name="starts_at" value="{{ event.starts_at if event else '' }}" placeholder="2026-12-31 18:00"></label>
+  <label>Price in BHD <input name="price" value="{{ (event.price_fils | bhd)[:-4] if event else '' }}"></label>
+  <label>Capacity <input name="capacity" value="{{ event.capacity if event else '' }}"></label>
+  <label>Description <textarea name="description">{{ event.description if event else '' }}</textarea></label>
+  <button>Save</button>
+</form>
+{% if event %}
+<h2>Let the AI write the description</h2>
+<form method="post" action="/organiser/events/{{ event.id }}/description">
+  <label>Notes for the AI <textarea name="notes"></textarea></label>
+  <button>Write it for me</button>
+</form>
+<p><a href="/organiser/events/{{ event.id }}/attendees">Who is coming</a></p>
+{% endif %}
+{% endblock %}

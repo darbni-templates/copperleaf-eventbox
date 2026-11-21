@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Order {{ code }}{% endblock %}
+{% block content %}
+<h1>Order {{ code }}</h1>
+<p>{{ event.name }}, {{ event.starts_at | when }}, {{ event.venue }}.</p>
+<p>Paid: {{ order.total_fils | bhd }}. Status: {{ order.status }}.</p>
+<h2>Your tickets</h2>
+<ol class="tickets">
+  {% for token in tokens %}<li>Ticket {{ loop.index }}: <code>{{ token }}</code></li>{% endfor %}
+</ol>
+<p><a href="/orders/{{ code }}/email">See the confirmation email</a></p>
+{% if order.status == "paid" %}
+<form method="post" action="/orders/{{ code }}/refund">
+  <button>Ask for a refund</button>
+</form>
+{% endif %}
+{% endblock %}
